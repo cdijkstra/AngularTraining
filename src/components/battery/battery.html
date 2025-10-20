@@ -1,20 +1,29 @@
 <div style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
-    Battery works!
-    Battery level: {{ batteryLevel() }}
-    <button (click)="ResetBattery()">Reset</button>
-    <button (click)="IncreaseBattery(10)">+10</button>
-    <button (click)="DecreaseBattery(10)">-10</button>
+    <div class="card">
+        Battery level: {{ batteryLevel() }}
 
-    {{ today | date:'short' }}
-    @if (batteryLevel() > 50)
-    {
-        <p [ngStyle]="fontSizeStyle">🔋</p>
-    }
-    @else if (batteryLevel() > 25 && batteryLevel() <= 50)
-    {
-        <p [ngStyle]="fontSizeStyle">🪫</p>
-    }
-    @else {
-        <p [ngStyle]="fontSizeStyle">🫙</p>
-    }
+        @if (batteryLevel() > 50)
+        {
+            <p [ngStyle]="fontSizeStyle">🔋</p>
+        }
+        @else if (batteryLevel() > 25 && batteryLevel() <= 50)
+        {
+            <p [ngStyle]="fontSizeStyle">🪫</p>
+        }
+        @else {
+            <p [ngStyle]="fontSizeStyle">🫙</p>
+        }
 
+        <div style="display: flex; flex-direction: row; align-items: center; justify-content: center;">
+            <button mat-flat-button (click)="ResetBattery()">
+                <mat-icon>clear_all</mat-icon>
+            </button>
+            <button mat-flat-button (click)="IncreaseBattery(10)">
+                <mat-icon>add</mat-icon>
+            </button>
+            <button mat-flat-button (click)="DecreaseBattery(10)">
+                <mat-icon>remove</mat-icon>
+            </button>
+        </div>
+    </div>
+</div>

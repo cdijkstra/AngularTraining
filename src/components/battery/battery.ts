@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { signal } from '@angular/core';
+import { MatButton} from "@angular/material/button";
+import {MatIconModule} from "@angular/material/icon";
 
 @Component({
   selector: 'app-battery',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, MatButton, MatIconModule],
   templateUrl: './battery.html',
   styleUrl: './battery.scss'
 })
