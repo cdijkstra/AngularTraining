@@ -1,2 +1,20 @@
-<p>battery works!</p>
-<img src="/battery-full.png" alt="full battery"/>
+<div style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+    Battery works!
+    Battery level: {{ batteryLevel() }}
+    <button (click)="ResetBattery()">Reset</button>
+    <button (click)="IncreaseBattery(10)">+10</button>
+    <button (click)="DecreaseBattery(10)">-10</button>
+
+    {{ today | date:'short' }}
+    @if (batteryLevel() > 50)
+    {
+        <p [ngStyle]="fontSizeStyle">🔋</p>
+    }
+    @else if (batteryLevel() > 25 && batteryLevel() <= 50)
+    {
+        <p [ngStyle]="fontSizeStyle">🪫</p>
+    }
+    @else {
+        <p [ngStyle]="fontSizeStyle">🫙</p>
+    }
+
