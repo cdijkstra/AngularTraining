@@ -183,7 +183,9 @@
 </style>
 
 <main class="main">
-  <app-battery [batteryName]="'Battery 1'">
+  <app-battery
+          [(batteryName)]="realBatteryName"
+          (newBatteryLevel)="onNewBatteryLevel($event)">
   </app-battery>
 </main>
 

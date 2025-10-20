@@ -8,6 +8,13 @@ import { Battery } from '../components/battery/battery';
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
+
 export class App {
   protected readonly title = signal('AngularWorkshopDay1');
+
+  realBatteryName = signal('Battery 1');
+
+  onNewBatteryLevel(newBatteryLevel: number) {
+    console.log('New battery level:', newBatteryLevel);
+  }
 }
