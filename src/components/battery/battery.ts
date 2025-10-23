@@ -25,10 +25,6 @@ export class Battery {
     setInterval(() => this.newBatteryLevel.emit(this.batteryLevel()), 1000);
   }
 
-  ChangeBatteryName(name: string) {
-    this.batteryName.set(name)
-  }
-
   ResetBattery() {
     this.batteryLevel.set(0)
   }
