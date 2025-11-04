@@ -1,1 +1,12 @@
-<p>meal works!</p>
+<div class="meal-list">
+  @for (meal of meals; track meal.name) {
+    <div class="meal-card">
+      <h2>{{ meal.name }}</h2>
+      <ul>
+        @for (ingredient of meal.ingredients; track ingredient) {
+          <li>{{ ingredient }}</li>
+        }
+      </ul>
+    </div>
+  }
+</div>
