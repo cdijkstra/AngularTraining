@@ -1,0 +1,6 @@
+@for (hero of service.heroes(); track hero.id)
+{
+    <div>
+        <button (click)="ToHero(hero.id)">{{hero.name}}</button>
+    </div>
+}
