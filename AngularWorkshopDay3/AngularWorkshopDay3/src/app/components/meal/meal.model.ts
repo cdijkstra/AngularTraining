@@ -1,5 +1,7 @@
 export interface MealModel {
-  name: string;
+  id: number;
+  title: string;
   ingredients: string[];
+  usedIngredients: number;
+  recipe: string;
 }
-
