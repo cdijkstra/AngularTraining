@@ -1,4 +1,4 @@
-<div class="meal-card">
+ <div class="meal-card" (click)="OpenMealDetail(meal.id)">
     <h2>{{ meal.title }}</h2>
     <ul>
         @for (ingredient of meal.ingredients; track ingredient) {

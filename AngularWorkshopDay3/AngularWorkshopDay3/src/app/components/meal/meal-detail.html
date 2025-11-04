@@ -1,0 +1,22 @@
+@if (meal)
+{
+    <div class="meal-detail">
+      <h1>{{ meal.title }}</h1>
+      <p>{{ meal.description }}</p>
+      <h3>Ingredients</h3>
+      <ul>
+        @for (ingredient of meal.ingredients; track ingredient) {
+          <li>{{ ingredient }}</li>
+        }
+      </ul>
+      <h3>Recipe</h3>
+      <pre>{{ meal.recipe }}</pre>
+    </div>
+    @if (!meal)
+    {
+        <div>
+          <p>Meal not found.</p>
+        </div>
+    }
+}
+
