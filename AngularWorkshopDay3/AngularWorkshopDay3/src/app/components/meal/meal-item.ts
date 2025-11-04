@@ -8,6 +8,7 @@ import { MealModel } from './meal.model';
   templateUrl: './meal-item.html',
   styleUrl: './meal-item.css',
 })
+
 export class MealItemComponent {
   @Input() meal!: MealModel;
 }
