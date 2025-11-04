@@ -14,14 +14,17 @@ export class MealList {
   meals: MealModel[] = [
     {
       title: 'Spaghetti',
+      description: 'Classic Italian pasta with tomato sauce and cheese.',
       ingredients: ['pasta', 'tomato', 'cheese']
     },
     {
       title: 'Chicken Curry',
+      description: 'Spicy chicken curry served with rice.',
       ingredients: ['chicken', 'curry powder', 'rice']
     },
     {
       title: 'Vegetable Stir Fry',
+      description: 'Mixed vegetables stir-fried in soy sauce.',
       ingredients: ['broccoli', 'carrot', 'soy sauce']
     }
   ];
