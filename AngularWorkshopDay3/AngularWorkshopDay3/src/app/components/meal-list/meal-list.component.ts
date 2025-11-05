@@ -1,5 +1,5 @@
 import {Component, inject} from '@angular/core';
-import { MealModel } from '../meal/meal.model';
+import { MealModel } from '../meal-detail/meal.model';
 import { MealItemComponent } from '../meal/meal-item';
 import { MealService } from '../../services/meal.service';
 

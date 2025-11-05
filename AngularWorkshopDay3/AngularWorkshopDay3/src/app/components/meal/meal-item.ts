@@ -1,5 +1,5 @@
 import {Component, inject, Input} from '@angular/core';
-import { MealModel } from './meal.model';
+import { MealModel } from '../meal-detail/meal.model';
 import {Router, RouterOutlet} from "@angular/router";
 
 @Component({
