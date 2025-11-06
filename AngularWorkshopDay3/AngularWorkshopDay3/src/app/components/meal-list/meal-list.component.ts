@@ -1,4 +1,4 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import { MealModel } from '../meal-detail/meal.model';
 import { MealItemComponent } from '../meal/meal-item';
 import { MealService } from '../../services/meal.service';
@@ -12,7 +12,7 @@ import { CommonModule } from '@angular/common';
   styleUrl: './meal-list.component.css',
 })
 
-export class MealList {
+export class MealList implements OnInit {
   mealService = inject(MealService);
   meals: MealModel[] = [];
   selectedCuisine: string = 'asian';
@@ -44,8 +44,11 @@ export class MealList {
     this.loading = true;
     this.meals = []; // Clear current meals
 
+    console.log(`Loading meals: cuisine=${this.selectedCuisine}, count=${this.selectedCount}`);
+
     this.mealService.fetchGenericRecipes(this.selectedCuisine, this.selectedCount).subscribe({
       next: (meals: MealModel[]) => {
+        console.log('Meals received in component:', meals);
         this.meals = meals;
         this.loading = false;
       },
@@ -55,4 +58,5 @@ export class MealList {
       }
     });
   }
+}
 }

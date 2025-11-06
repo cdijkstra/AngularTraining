@@ -16,12 +16,13 @@ export class MealService {
   }
 
   fetchGenericRecipes(cuisine: string, count: number = 10): Observable<MealModel[]> {
-    if (localStorage.getItem(this.getReceivedRecipesOverviewKey(cuisine, count))) {
-      const storedMeals = localStorage.getItem(`meals_${cuisine}_${count}`);
-      if (storedMeals) {
-        this.loadMealsFromStorage(cuisine, count);
-        return of(this.meals);
-      }
+    // Check if we have cached data
+    const storedMeals = localStorage.getItem(`meals_${cuisine}_${count}`);
+    if (storedMeals) {
+      console.log('Loading from cache');
+      const cachedMeals = JSON.parse(storedMeals);
+      this.meals = cachedMeals; // Update service state
+      return of(cachedMeals); // Return the actual cached data
     }
 
     console.log('API call')
@@ -54,8 +55,8 @@ export class MealService {
           return detailedResponses.map(r => this.mapToMealModel(r));
         }),
         tap((meals: MealModel[]) => {
-          this.meals = meals; // Replace instead of push to avoid duplicates
-          console.log('Meals added:', this.meals);
+          this.meals = meals; // Update service state
+          console.log('Meals loaded from API:', this.meals);
           this.saveReceivedRecipes(cuisine, count);
           this.saveMealsToStorage(cuisine, count, meals);
         })
