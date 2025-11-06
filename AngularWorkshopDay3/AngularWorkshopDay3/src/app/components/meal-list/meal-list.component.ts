@@ -12,5 +12,11 @@ import { MealService } from '../../services/meal.service';
 
 export class MealList {
   mealService = inject(MealService);
-  meals: MealModel[] = this.mealService.getMeals();
+  meals: MealModel[] = [];
+
+  ngOnInit(): void {
+    this.mealService.fetchGenericRecipes('asian').subscribe((meals: MealModel[]) => {
+      this.meals = meals;
+    });
+  }
 }

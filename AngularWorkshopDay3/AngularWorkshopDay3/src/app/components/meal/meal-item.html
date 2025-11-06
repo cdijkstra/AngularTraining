@@ -4,9 +4,8 @@
          (click)="OpenMealDetail(meal.id)">
     <h2>{{ meal.title }}</h2>
         <ul>
-            @for (ingredient of meal.ingredients; track ingredient) {
-                <li>{{ ingredient }}</li>
-            }
+            Number of ingredients: {{ meal.ingredients.length }}
+            <img src="{{ meal.image }}" alt="{{ meal.title }}">
         </ul>
     </div>
     <button mat-icon-button

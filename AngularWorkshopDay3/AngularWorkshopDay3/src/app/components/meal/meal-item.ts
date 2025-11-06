@@ -1,13 +1,13 @@
 import {Component, inject, Input} from '@angular/core';
 import { MealModel } from '../meal-detail/meal.model';
-import {Router, RouterOutlet} from "@angular/router";
+import {Router} from "@angular/router";
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from "@angular/material/button";
 
 @Component({
   selector: 'meal-item',
   standalone: true,
-  imports: [RouterOutlet, MatIconModule, MatButtonModule],
+  imports: [MatIconModule, MatButtonModule],
   templateUrl: './meal-item.html',
   styleUrl: './meal-item.css',
 })
