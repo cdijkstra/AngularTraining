@@ -59,4 +59,3 @@ export class MealList implements OnInit {
     });
   }
 }
-}
