@@ -4,8 +4,7 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {ReceivedRecipeOverview} from "./ReceivedRecipeOverview";
 import {spoontacularApis} from "./spoontacularApis";
 import {environment} from "../../environments/environment";
-import {BehaviorSubject, forkJoin, Observable, of, tap} from 'rxjs';
-import {map, switchMap} from 'rxjs/operators';
+import {BehaviorSubject, forkJoin, lastValueFrom, Observable, of, tap} from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class MealService {
@@ -17,14 +16,15 @@ export class MealService {
     return `receivedRecipesOverviewKey_${cuisine}_${count}`;
   }
 
-  fetchGenericRecipes(cuisine: string, count: number = 10) {
+  async fetchGenericRecipes(cuisine: string, count: number = 10) {
     // Check if we have cached data
     const storedMeals = localStorage.getItem(`meals_${cuisine}_${count}`);
+    console.log('Stored meals:', storedMeals);
     if (storedMeals) {
       console.log('Loading from cache');
       const cachedMeals = JSON.parse(storedMeals);
       this.meals.next(cachedMeals); // Update service state
-      return of(cachedMeals); // Return the actual cached data
+      return;
     }
 
     console.log('API call')
@@ -33,37 +33,39 @@ export class MealService {
       'x-api-key': environment.spoonacularApiKey
     });
 
-    return this.httpClient.get<any>(url, { headers }).pipe(
-        switchMap(response => {
-          // Store lightweight recipes (from search)
-          this.receivedRecipes = response.results.map((r: any) => ({
-            id: r.id,
-            title: r.title,
-            image: r.image
-          }));
 
-          // Build an array of detailed recipe requests
-          const detailRequests = this.receivedRecipes.map(recipe =>
-              this.httpClient.get<any>(
-                  spoontacularApis.recipeDetails(recipe.id),
-                  { headers }
-              )
-          );
+    const response = await lastValueFrom(this.httpClient.get<any>(url, { headers }));
+    // Store lightweight recipes
+    this.receivedRecipes = response.results.map((r: any) => ({
+      id: r.id,
+      title: r.title,
+      image: r.image
+    }));
 
-          // Wait for all detail requests to complete
-          return forkJoin(detailRequests);
-        }),
-        map((detailedResponses: any[]) => {
-          return detailedResponses.map(r => this.mapToMealModel(r));
-        }),
-        tap((meals: MealModel[]) => {
-          this.meals.next(meals); // Update service state
-          console.log('Meals loaded from API:', this.meals);
-          this.saveReceivedRecipes(cuisine, count);
-          this.saveMealsToStorage(cuisine, count, meals);
-        })
+    // Build detail requests
+    const detailRequests = this.receivedRecipes.map(recipe =>
+        lastValueFrom(this.httpClient.get<any>(
+            spoontacularApis.recipeDetails(recipe.id),
+            { headers }
+        ))
     );
-  }
+
+    // Wait for all detail requests
+    const detailedResponses = await Promise.all(detailRequests);
+
+    // Map to MealModel
+    const meals = detailedResponses.map(r => this.mapToMealModel(r));
+
+    // Update state and storage
+    this.saveReceivedRecipes(cuisine, count);
+    this.saveMealsToStorage(cuisine, count, meals);
+    this.meals.next(meals);
+  };
+
+
+
+    // return this.httpClient.get<any>(url, { headers }).pipe(
+
 
   private saveReceivedRecipes(cuisine: string, count: number) {
     localStorage.setItem(this.getReceivedRecipesOverviewKey(cuisine, count), JSON.stringify(this.receivedRecipes));

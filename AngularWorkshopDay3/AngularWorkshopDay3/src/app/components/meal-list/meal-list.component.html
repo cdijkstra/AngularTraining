@@ -59,7 +59,7 @@
     </div>
   }
 
-  @if (!loading && meals.length > 0) {
+  @if (!loading && meals()?.length !== 0) {
     <div class="meals-grid">
       @for (meal of meals(); track meal.id) {
         <meal-item [meal]="meal"></meal-item>
@@ -67,7 +67,7 @@
     </div>
   }
 
-  @if (!loading && meals.length === 0) {
+  @if (!loading && meals()?.length === 0) {
     <div class="no-meals">
       @if (showingFavorites) {
         <p>⭐ No favorite recipes yet!</p>

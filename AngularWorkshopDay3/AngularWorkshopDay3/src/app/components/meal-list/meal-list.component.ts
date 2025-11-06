@@ -30,9 +30,7 @@ export class MealList implements OnInit {
   countOptions = [1, 2, 5, 10, 20, 50];
 
   ngOnInit(): void {
-    // this.loadMeals();
     this.mealService.fetchGenericRecipes(this.selectedCuisine, this.selectedCount)
-
   }
 
   onCuisineChange(): void {

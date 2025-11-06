@@ -19,6 +19,11 @@ export class MealDetailComponent implements OnInit {
 
     constructor() {
         this.id = Number(this.route.snapshot.paramMap.get('id'));
+        effect(() => {
+            const meals = this.mealService['meals'].getValue();
+            this.meal = meals.find(meal => meal.id === this.id);
+            console.log('MealDetailComponent: Looking for meal ID', this.id, 'Found:', this.meal);
+        });
     }
 
     ngOnInit() {
@@ -29,11 +34,6 @@ export class MealDetailComponent implements OnInit {
                 this.mealService['meals'].next(JSON.parse(storedMeals));
             }
         }
-        effect(() => {
-            const meals = this.mealService['meals'].getValue();
-            this.meal = meals.find(meal => meal.id === this.id);
-            console.log('MealDetailComponent: Looking for meal ID', this.id, 'Found:', this.meal);
-        });
     }
 
     GoBack() {
