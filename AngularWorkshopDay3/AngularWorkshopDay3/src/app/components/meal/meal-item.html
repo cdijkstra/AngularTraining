@@ -1,8 +1,18 @@
- <div class="meal-card" (click)="OpenMealDetail(meal.id)">
+<div class="meal-item-container"
+     [class.favorite]="isFavorite(meal.id)">
+    <div class="meal-card"
+         (click)="OpenMealDetail(meal.id)">
     <h2>{{ meal.title }}</h2>
-    <ul>
-        @for (ingredient of meal.ingredients; track ingredient) {
-            <li>{{ ingredient }}</li>
-        }
-    </ul>
+        <ul>
+            @for (ingredient of meal.ingredients; track ingredient) {
+                <li>{{ ingredient }}</li>
+            }
+        </ul>
+    </div>
+    <button mat-icon-button
+            class="favorite-btn"
+            [attr.aria-pressed]="isFavorite(meal.id)"
+            (click)="toggleFavorite(meal.id)">
+        <mat-icon>{{ isFavorite(meal.id) ? 'star' : 'star_border' }}</mat-icon>
+    </button>
 </div>

@@ -1,7 +1,34 @@
+.meal-item-container {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 8px;
+  background: lightblue;
+}
+
+.meal-item-container.favorite {
+  border: 2px solid green;
+}
+
 .meal-card {
   border: 1px solid #ccc;
   border-radius: 8px;
   padding: 1rem;
   width: 200px;
-  background: #fafafa;
+  background: cornflowerblue;
+}
+
+
+.favorite-btn {
+  align-self: flex-end;
+  margin-top: 8px;
+}
+
+.favorite-btn .mat-icon {
+  font-size: 28px;
+}
+
+.favorite-btn[aria-pressed="true"] {
+  background: #ffe0e0;
+  border-radius: 50%;
 }

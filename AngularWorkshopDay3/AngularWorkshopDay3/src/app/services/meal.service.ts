@@ -3,6 +3,12 @@ import { MealModel } from '../components/meal-detail/meal.model';
 
 @Injectable({ providedIn: 'root' })
 export class MealService {
+
+  constructor() {
+    // Doe API Request overview asian cuisine
+    // Doe
+  }
+
   private meals: MealModel[] = [
     {
       id: 1,
@@ -28,8 +34,8 @@ export class MealService {
       usedIngredients: 3,
       recipe: `1. Chop vegetables into bite-sized pieces.\n2. Heat oil in a wok and add vegetables.\n3. Stir fry for 5 minutes.\n4. Add soy sauce and cook for another 2 minutes.\n5. Serve immediately.`
     }
-  ];
 
+  ];
   getMeals(): MealModel[] {
     return this.meals;
   }
