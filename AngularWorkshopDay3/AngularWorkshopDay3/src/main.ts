@@ -9,4 +9,3 @@ bootstrapApplication(App, {
         provideHttpClient()
     ]
 })
-    .catch((err) => console.error(err));

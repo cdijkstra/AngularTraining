@@ -1,9 +1,9 @@
-import {Component, inject, OnInit} from '@angular/core';
-import { MealModel } from '../meal-detail/meal.model';
+import {Component, inject, OnInit, signal} from '@angular/core';
 import { MealItemComponent } from '../meal/meal-item';
 import { MealService } from '../../services/meal.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import {toSignal} from "@angular/core/rxjs-interop";
 
 @Component({
   selector: 'app-meal-list',
@@ -14,7 +14,8 @@ import { CommonModule } from '@angular/common';
 
 export class MealList implements OnInit {
   mealService = inject(MealService);
-  meals: MealModel[] = [];
+  meals = toSignal(this.mealService.meals)
+
   selectedCuisine: string = 'asian';
   selectedCount: number = 10;
   loading: boolean = false;
@@ -29,7 +30,9 @@ export class MealList implements OnInit {
   countOptions = [1, 2, 5, 10, 20, 50];
 
   ngOnInit(): void {
-    this.loadMeals();
+    // this.loadMeals();
+    this.mealService.fetchGenericRecipes(this.selectedCuisine, this.selectedCount)
+
   }
 
   onCuisineChange(): void {
@@ -44,7 +47,6 @@ export class MealList implements OnInit {
   showFavorites(): void {
     this.showingFavorites = true;
     this.loading = true;
-    this.meals = [];
 
     // Get favorite IDs from localStorage
     const stored = localStorage.getItem('meal-favorites');
@@ -57,7 +59,6 @@ export class MealList implements OnInit {
 
     // Get all favorite meals from service
     const favoriteMeals = this.mealService.getFavoritesMeals(favoriteIds);
-    this.meals = favoriteMeals;
     this.loading = false;
   }
 
@@ -66,22 +67,10 @@ export class MealList implements OnInit {
     this.loadMeals();
   }
 
+
   private loadMeals(): void {
     this.loading = true;
-    this.meals = []; // Clear current meals
 
     console.log(`Loading meals: cuisine=${this.selectedCuisine}, count=${this.selectedCount}`);
-
-    this.mealService.fetchGenericRecipes(this.selectedCuisine, this.selectedCount).subscribe({
-      next: (meals: MealModel[]) => {
-        console.log('Meals received in component:', meals);
-        this.meals = meals;
-        this.loading = false;
-      },
-      error: (error) => {
-        console.error('Error loading meals:', error);
-        this.loading = false;
-      }
-    });
   }
 }

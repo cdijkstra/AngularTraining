@@ -10,20 +10,20 @@ import {map, switchMap} from 'rxjs/operators';
 @Injectable({ providedIn: 'root' })
 export class MealService {
 
-  private meals: BehaviorSubject<MealModel[]> = new BehaviorSubject<MealModel[]>([]);
+  public meals: BehaviorSubject<MealModel[]> = new BehaviorSubject<MealModel[]>([]);
 
   private httpClient = inject(HttpClient);
   private getReceivedRecipesOverviewKey(cuisine: string, count: number): string {
     return `receivedRecipesOverviewKey_${cuisine}_${count}`;
   }
 
-  fetchGenericRecipes(cuisine: string, count: number = 10): Observable<MealModel[]> {
+  fetchGenericRecipes(cuisine: string, count: number = 10) {
     // Check if we have cached data
     const storedMeals = localStorage.getItem(`meals_${cuisine}_${count}`);
     if (storedMeals) {
       console.log('Loading from cache');
       const cachedMeals = JSON.parse(storedMeals);
-      this.meals = cachedMeals; // Update service state
+      this.meals.next(cachedMeals); // Update service state
       return of(cachedMeals); // Return the actual cached data
     }
 

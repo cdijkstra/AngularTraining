@@ -61,7 +61,7 @@
 
   @if (!loading && meals.length > 0) {
     <div class="meals-grid">
-      @for (meal of meals; track meal.id) {
+      @for (meal of meals(); track meal.id) {
         <meal-item [meal]="meal"></meal-item>
       }
     </div>
