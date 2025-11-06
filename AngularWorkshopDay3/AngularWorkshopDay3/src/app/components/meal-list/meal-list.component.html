@@ -1,38 +1,61 @@
 <div class="meal-list-container">
-  <div class="filters-section">
-    <div class="cuisine-selector">
-      <label for="cuisine-select">Choose a cuisine:</label>
-      <select
-        id="cuisine-select"
-        [(ngModel)]="selectedCuisine"
-        (change)="onCuisineChange()"
-        class="cuisine-dropdown">
-        @for (cuisine of cuisineOptions; track cuisine.value) {
-          <option [value]="cuisine.value">{{ cuisine.label }}</option>
-        }
-      </select>
-    </div>
+  <div class="view-toggle-section">
+    <button
+      type="button"
+      class="view-toggle-btn"
+      [class.active]="!showingFavorites"
+      (click)="showAllMeals()">
+      All Recipes
+    </button>
+    <button
+      type="button"
+      class="view-toggle-btn favorites-btn"
+      [class.active]="showingFavorites"
+      (click)="showFavorites()">
+      ⭐ Favorites
+    </button>
+  </div>
 
-    <div class="count-selector">
-      <label>Number of possibly delicious recipes:</label>
-      <div class="count-buttons">
-        @for (count of countOptions; track count) {
-          <button
-            type="button"
-            class="count-btn"
-            [class.active]="selectedCount === count"
-            (click)="onCountChange(count)">
-            {{ count }}
-          </button>
-        }
+  @if (!showingFavorites) {
+    <div class="filters-section">
+      <div class="cuisine-selector">
+        <label for="cuisine-select">Choose a cuisine:</label>
+        <select
+          id="cuisine-select"
+          [(ngModel)]="selectedCuisine"
+          (change)="onCuisineChange()"
+          class="cuisine-dropdown">
+          @for (cuisine of cuisineOptions; track cuisine.value) {
+            <option [value]="cuisine.value">{{ cuisine.label }}</option>
+          }
+        </select>
+      </div>
+
+      <div class="count-selector">
+        <label>Number of recipes:</label>
+        <div class="count-buttons">
+          @for (count of countOptions; track count) {
+            <button
+              type="button"
+              class="count-btn"
+              [class.active]="selectedCount === count"
+              (click)="onCountChange(count)">
+              {{ count }}
+            </button>
+          }
+        </div>
       </div>
     </div>
-  </div>
+  }
 
   @if (loading) {
     <div class="loading-state">
       <div class="loading-spinner"></div>
-      <p>Loading {{ selectedCount }} delicious {{ selectedCuisine }} recipes...</p>
+      @if (showingFavorites) {
+        <p>Loading your favorite recipes...</p>
+      } @else {
+        <p>Loading {{ selectedCount }} delicious {{ selectedCuisine }} recipes...</p>
+      }
     </div>
   }
 
@@ -46,7 +69,12 @@
 
   @if (!loading && meals.length === 0) {
     <div class="no-meals">
-      <p>No recipes found for {{ selectedCuisine }} cuisine. Please try again.</p>
+      @if (showingFavorites) {
+        <p>⭐ No favorite recipes yet!</p>
+        <p>Start favoriting recipes to see them here.</p>
+      } @else {
+        <p>No recipes found for {{ selectedCuisine }} cuisine. Please try again.</p>
+      }
     </div>
   }
 </div>

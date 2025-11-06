@@ -18,6 +18,7 @@ export class MealList implements OnInit {
   selectedCuisine: string = 'asian';
   selectedCount: number = 10;
   loading: boolean = false;
+  showingFavorites: boolean = false;
 
   cuisineOptions = [
     { value: 'asian', label: 'Asian' },
@@ -37,6 +38,31 @@ export class MealList implements OnInit {
 
   onCountChange(count: number): void {
     this.selectedCount = count;
+    this.loadMeals();
+  }
+
+  showFavorites(): void {
+    this.showingFavorites = true;
+    this.loading = true;
+    this.meals = [];
+
+    // Get favorite IDs from localStorage
+    const stored = localStorage.getItem('meal-favorites');
+    const favoriteIds: number[] = stored ? JSON.parse(stored) : [];
+
+    if (favoriteIds.length === 0) {
+      this.loading = false;
+      return;
+    }
+
+    // Get all favorite meals from service
+    const favoriteMeals = this.mealService.getFavoritesMeals(favoriteIds);
+    this.meals = favoriteMeals;
+    this.loading = false;
+  }
+
+  showAllMeals(): void {
+    this.showingFavorites = false;
     this.loadMeals();
   }
 

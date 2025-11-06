@@ -134,4 +134,28 @@ export class MealService {
   getMealById(id: number): MealModel | undefined {
     return this.meals.find(meal => meal.id === id);
   }
+
+  getFavoritesMeals(favoriteIds: number[]): MealModel[] {
+    const allFavorites: MealModel[] = [];
+
+    // Search through all localStorage entries for meals
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (key && key.startsWith('meals_')) {
+        const storedMeals = localStorage.getItem(key);
+        if (storedMeals) {
+          const meals: MealModel[] = JSON.parse(storedMeals);
+          const matchingMeals = meals.filter(meal => favoriteIds.includes(meal.id));
+          allFavorites.push(...matchingMeals);
+        }
+      }
+    }
+
+    // Remove duplicates (in case same meal is in multiple cuisine/count combinations)
+    const uniqueFavorites = allFavorites.filter((meal, index, self) =>
+      index === self.findIndex(m => m.id === meal.id)
+    );
+
+    return uniqueFavorites;
+  }
 }
