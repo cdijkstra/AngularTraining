@@ -1,24 +1,27 @@
+<button class="back-button" (click)="GoBack()">← Back to Meals</button>
+
 @if (meal)
 {
     <div class="meal-detail">
-      <h1>{{ meal.title }}</h1>
-      <p>{{ meal.description }}</p>
-      <h3>Ingredients</h3>
-      <ul>
-        @for (ingredient of meal.ingredients; track ingredient) {
-          <li>{{ ingredient }}</li>
-        }
-      </ul>
-      <h3>Recipe</h3>
-      <pre>{{ meal.recipe }}</pre>
+        <h1>{{ meal.title }}</h1>
+        <p>{{ meal.description }}</p>
+        <img [src]="meal.image" [alt]="meal.title" class="meal-image">
+
+        <h3>Ingredients</h3>
+        <ul>
+            @for (ingredient of meal.ingredients; track ingredient) {
+                <li>{{ ingredient }}</li>
+            }
+        </ul>
+        <h3>Recipe</h3>
+        <pre>{{ meal.recipe }}</pre>
     </div>
-    @if (!meal)
-    {
-        <div>
-          <p>Meal not found.</p>
-        </div>
-    }
+} @else {
+    <div class="not-found">
+        <p>🍽️ Meal not found.</p>
+        <p>The recipe you're looking for doesn't exist or has been removed.</p>
+    </div>
 }
 
-<button (click)="GoBack()">Back to Meals</button>
+<button class="back-button" (click)="GoBack()">← Back to Meals</button>
 
