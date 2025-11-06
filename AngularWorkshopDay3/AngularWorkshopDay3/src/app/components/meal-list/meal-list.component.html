@@ -1,5 +1,7 @@
-<div class="meal-list">
-  @for (meal of meals; track meal.title) {
-    <meal-item [meal]="meal"></meal-item>
-  }
+<div class="meal-list-container">
+  <div class="meals-grid">
+    @for (meal of meals; track meal.id) {
+      <meal-item [meal]="meal"></meal-item>
+    }
+  </div>
 </div>

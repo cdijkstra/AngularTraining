@@ -1,34 +1,112 @@
-.meal-item-container {
+.meal-card {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  height: 380px;
   display: flex;
   flex-direction: column;
-  align-items: stretch;
-  gap: 8px;
-  background: lightblue;
+  position: relative;
 }
 
-.meal-item-container.favorite {
-  border: 2px solid green;
+.meal-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
 }
 
-.meal-card {
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  padding: 1rem;
-  width: 200px;
-  background: cornflowerblue;
+.meal-card.favorite {
+  border: 3px solid #4CAF50;
+  box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
 }
 
+.image-container {
+  position: relative;
+  height: 220px;
+  overflow: hidden;
+}
+
+.meal-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.meal-card:hover .meal-image {
+  transform: scale(1.08);
+}
+
+.ingredient-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: rgba(0, 0, 0, 0.85);
+  color: white;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  backdrop-filter: blur(4px);
+}
 
 .favorite-btn {
-  align-self: flex-end;
-  margin-top: 8px;
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: rgba(255, 255, 255, 0.9) !important;
+  width: 44px !important;
+  height: 44px !important;
+  border-radius: 50% !important;
+  backdrop-filter: blur(4px);
+  transition: all 0.2s ease;
 }
 
-.favorite-btn .mat-icon {
-  font-size: 28px;
+.favorite-btn:hover {
+  background: rgba(255, 255, 255, 1) !important;
+  transform: scale(1.1);
 }
 
 .favorite-btn[aria-pressed="true"] {
-  background: #ffe0e0;
-  border-radius: 50%;
+  background: rgba(255, 235, 59, 0.95) !important;
+  color: #FF6B35;
+}
+
+.favorite-btn .mat-icon {
+  font-size: 24px !important;
+  width: 24px !important;
+  height: 24px !important;
+}
+
+.card-content {
+  padding: 20px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.meal-title {
+  margin: 0 0 12px 0;
+  font-size: 20px;
+  font-weight: 700;
+  color: #2c3e50;
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.meal-description {
+  margin: 0;
+  color: #7f8c8d;
+  font-size: 14px;
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  flex: 1;
 }

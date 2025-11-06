@@ -1,17 +1,20 @@
-<div class="meal-item-container"
-     [class.favorite]="isFavorite(meal.id)">
-    <div class="meal-card"
-         (click)="OpenMealDetail(meal.id)">
-    <h2>{{ meal.title }}</h2>
-        <ul>
-            Number of ingredients: {{ meal.ingredients.length }}
-            <img src="{{ meal.image }}" alt="{{ meal.title }}">
-        </ul>
+<div class="meal-card"
+     [class.favorite]="isFavorite(meal.id)"
+     (click)="OpenMealDetail(meal.id)">
+  <div class="image-container">
+    <img [src]="meal.image" [alt]="meal.title" class="meal-image">
+    <div class="ingredient-badge">
+      {{ meal.ingredients.length }} ingredients
     </div>
     <button mat-icon-button
             class="favorite-btn"
             [attr.aria-pressed]="isFavorite(meal.id)"
-            (click)="toggleFavorite(meal.id)">
-        <mat-icon>{{ isFavorite(meal.id) ? 'star' : 'star_border' }}</mat-icon>
+            (click)="$event.stopPropagation(); toggleFavorite(meal.id)">
+      <mat-icon>{{ isFavorite(meal.id) ? 'star' : 'star_border' }}</mat-icon>
     </button>
+  </div>
+  <div class="card-content">
+    <h3 class="meal-title">{{ meal.title }}</h3>
+    <p class="meal-description">{{ meal.description || 'Delicious recipe to try!' }}</p>
+  </div>
 </div>
