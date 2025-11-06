@@ -1,6 +1,6 @@
 import { Component, signal } from '@angular/core';
-import { MealList } from './components/meal-list/meal-list.component';
 import {RouterOutlet} from "@angular/router";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -9,5 +9,5 @@ import {RouterOutlet} from "@angular/router";
   styleUrl: './app.css'
 })
 export class App {
-  protected readonly title = signal('AngularWorkshopDay3');
+  protected readonly title = signal('FoodApp');
 }

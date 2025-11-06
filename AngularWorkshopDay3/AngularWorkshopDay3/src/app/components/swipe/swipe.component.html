@@ -1,0 +1,31 @@
+<div class="swipe-container">
+  @if (!showDetails && meal) {
+    <div class="meal-card">
+      <img [src]="meal.image" alt="{{ meal.title }}" class="meal-image" />
+      <h2>{{ meal.title }}</h2>
+      <div class="swipe-actions">
+        <button class="dislike" (click)="dislikeMeal()">Dislike</button>
+        <button class="like" (click)="likeMeal()">Like</button>
+      </div>
+    </div>
+  } @else if (showDetails && meal) {
+    <div class="meal-detail">
+      <h1>{{ meal.title }}</h1>
+      <p>{{ meal.description }}</p>
+      <img [src]="meal.image" [alt]="meal.title" class="meal-image">
+      <h3>Ingredients</h3>
+      <ul>
+        @for (ingredient of meal.ingredients; track ingredient) {
+          <li>{{ ingredient }}</li>
+        }
+      </ul>
+      <h3>Recipe</h3>
+      <pre>{{ meal.recipe }}</pre>
+      <button class="next-button" (click)="nextMeal()">Next</button>
+    </div>
+  } @else {
+    <div class="no-meal">
+      <p>No more meals to swipe!</p>
+    </div>
+  }
+</div>

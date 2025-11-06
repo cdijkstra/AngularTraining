@@ -132,4 +132,23 @@ export class MealService {
         index === self.findIndex(m => m.id === meal.id)
     );
   }
+
+  /**
+   * Get a random meal from all cached meals in localStorage
+   */
+  getRandomMeal(): MealModel | undefined {
+    const allMeals: MealModel[] = [];
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (key && key.startsWith('meals_')) {
+        const storedMeals = localStorage.getItem(key);
+        if (storedMeals) {
+          allMeals.push(...JSON.parse(storedMeals));
+        }
+      }
+    }
+    if (allMeals.length === 0) return undefined;
+    const randomIndex = Math.floor(Math.random() * allMeals.length);
+    return allMeals[randomIndex];
+  }
 }

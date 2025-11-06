@@ -10,6 +10,13 @@
     <button
       type="button"
       class="view-toggle-btn favorites-btn"
+      [class.active]="!showingFavorites"
+      (click)="showSwipe()">
+      Swipe
+    </button>
+    <button
+      type="button"
+      class="view-toggle-btn favorites-btn"
       [class.active]="showingFavorites"
       (click)="showFavorites()">
       ⭐ Favorites

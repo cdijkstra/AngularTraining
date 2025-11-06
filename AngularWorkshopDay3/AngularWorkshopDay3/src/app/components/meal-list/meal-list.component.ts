@@ -4,6 +4,8 @@ import { MealItemComponent } from '../meal/meal-item';
 import { MealService } from '../../services/meal.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import {routes} from "../../app.routes";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-meal-list',
@@ -19,6 +21,7 @@ export class MealList implements OnInit {
   selectedCount: number = 10;
   loading: boolean = false;
   showingFavorites: boolean = false;
+  private router = inject(Router);
 
   cuisineOptions = [
     { value: 'asian', label: 'Asian' },
@@ -39,6 +42,10 @@ export class MealList implements OnInit {
   onCountChange(count: number): void {
     this.selectedCount = count;
     this.loadMeals();
+  }
+
+  showSwipe() {
+    this.router.navigate(['/swipe']);
   }
 
   showFavorites(): void {
