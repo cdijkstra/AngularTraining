@@ -4,6 +4,118 @@
   margin: 0 auto;
 }
 
+.filters-section {
+  margin-bottom: 32px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.cuisine-selector label,
+.count-selector label {
+  display: block;
+  margin-bottom: 12px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.cuisine-dropdown {
+  padding: 12px 20px;
+  font-size: 16px;
+  border: 2px solid #e1e8ed;
+  border-radius: 8px;
+  background: white;
+  color: #2c3e50;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: 200px;
+}
+
+.cuisine-dropdown:hover {
+  border-color: #3498db;
+}
+
+.cuisine-dropdown:focus {
+  outline: none;
+  border-color: #3498db;
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+}
+
+.count-buttons {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.count-btn {
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  border: 2px solid #e1e8ed;
+  border-radius: 6px;
+  background: white;
+  color: #2c3e50;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: 50px;
+}
+
+.count-btn:hover {
+  border-color: #3498db;
+  background: #f8f9fa;
+}
+
+.count-btn.active {
+  background: #3498db;
+  color: white;
+  border-color: #3498db;
+}
+
+.count-btn:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+}
+
+.loading-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: #7f8c8d;
+}
+
+.loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #3498db;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 20px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loading-state p {
+  font-size: 16px;
+  margin: 0;
+}
+
+.no-meals {
+  text-align: center;
+  padding: 60px 20px;
+  color: #7f8c8d;
+}
+
+.no-meals p {
+  font-size: 16px;
+  margin: 0;
+}
+
 .meals-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -24,6 +136,27 @@
     padding: 16px;
   }
 
+  .filters-section {
+    margin-bottom: 24px;
+    gap: 20px;
+  }
+
+  .cuisine-dropdown {
+    min-width: 180px;
+    font-size: 14px;
+    padding: 10px 16px;
+  }
+
+  .count-buttons {
+    gap: 6px;
+  }
+
+  .count-btn {
+    padding: 8px 12px;
+    font-size: 13px;
+    min-width: 40px;
+  }
+
   .meals-grid {
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 16px;
@@ -33,6 +166,24 @@
 @media (max-width: 480px) {
   .meal-list-container {
     padding: 12px;
+  }
+
+  .filters-section {
+    gap: 16px;
+  }
+
+  .cuisine-dropdown {
+    min-width: 160px;
+  }
+
+  .count-buttons {
+    gap: 4px;
+  }
+
+  .count-btn {
+    padding: 6px 10px;
+    font-size: 12px;
+    min-width: 35px;
   }
 
   .meals-grid {

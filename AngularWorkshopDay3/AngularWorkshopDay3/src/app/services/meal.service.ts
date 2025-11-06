@@ -11,21 +11,21 @@ import { map, switchMap } from 'rxjs/operators';
 export class MealService {
 
   private httpClient = inject(HttpClient);
-  private getReceivedRecipesOverviewKey(cuisine: string): string {
-    return `receivedRecipesOverviewKey_${cuisine}`;
+  private getReceivedRecipesOverviewKey(cuisine: string, count: number): string {
+    return `receivedRecipesOverviewKey_${cuisine}_${count}`;
   }
 
-  fetchGenericRecipes(cuisine: string): Observable<MealModel[]> {
-    if (localStorage.getItem(this.getReceivedRecipesOverviewKey(cuisine))) {
-      const storedMeals = localStorage.getItem(`meals_${cuisine}`);
+  fetchGenericRecipes(cuisine: string, count: number = 10): Observable<MealModel[]> {
+    if (localStorage.getItem(this.getReceivedRecipesOverviewKey(cuisine, count))) {
+      const storedMeals = localStorage.getItem(`meals_${cuisine}_${count}`);
       if (storedMeals) {
-        this.loadMealsFromStorage(cuisine);
+        this.loadMealsFromStorage(cuisine, count);
         return of(this.meals);
       }
     }
 
     console.log('API call')
-    const url = spoontacularApis.recipeOverview(cuisine);
+    const url = spoontacularApis.recipeOverview(cuisine, count);
     const headers = new HttpHeaders({
       'x-api-key': environment.spoonacularApiKey
     });
@@ -54,31 +54,31 @@ export class MealService {
           return detailedResponses.map(r => this.mapToMealModel(r));
         }),
         tap((meals: MealModel[]) => {
-          this.meals.push(...meals);
+          this.meals = meals; // Replace instead of push to avoid duplicates
           console.log('Meals added:', this.meals);
-          this.saveReceivedRecipes(cuisine);
-          this.saveMealsToStorage(cuisine, meals);
+          this.saveReceivedRecipes(cuisine, count);
+          this.saveMealsToStorage(cuisine, count, meals);
         })
     );
   }
 
-  private saveReceivedRecipes(cuisine: string) {
-    localStorage.setItem(this.getReceivedRecipesOverviewKey(cuisine), JSON.stringify(this.receivedRecipes));
+  private saveReceivedRecipes(cuisine: string, count: number) {
+    localStorage.setItem(this.getReceivedRecipesOverviewKey(cuisine, count), JSON.stringify(this.receivedRecipes));
   }
 
-  private saveMealsToStorage(cuisine: string, meals: MealModel[]) {
-    localStorage.setItem(`meals_${cuisine}`, JSON.stringify(meals));
+  private saveMealsToStorage(cuisine: string, count: number, meals: MealModel[]) {
+    localStorage.setItem(`meals_${cuisine}_${count}`, JSON.stringify(meals));
   }
 
-  private loadReceivedRecipes(cuisine: string) {
-    const stored = localStorage.getItem(this.getReceivedRecipesOverviewKey(cuisine));
+  private loadReceivedRecipes(cuisine: string, count: number) {
+    const stored = localStorage.getItem(this.getReceivedRecipesOverviewKey(cuisine, count));
     this.receivedRecipes = stored ? JSON.parse(stored) : [];
   }
 
-  private loadMealsFromStorage(cuisine: string) {
-    const stored = localStorage.getItem(`meals_${cuisine}`);
+  private loadMealsFromStorage(cuisine: string, count: number) {
+    const stored = localStorage.getItem(`meals_${cuisine}_${count}`);
     this.meals = stored ? JSON.parse(stored) : [];
-    this.loadReceivedRecipes(cuisine);
+    this.loadReceivedRecipes(cuisine, count);
   }
 
   // 🧽 Helper: remove HTML tags from summary
